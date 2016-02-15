@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/templates/modeloGeral.xhtml">
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="amgAcao" value="#{amigoBean.acao}" />
+			<f:viewParam name="amgCod" value="#{amigoBean.id}" />
+
+			<f:event listener="#{amigoBean.carregarCadastro}"
+				type="preRenderView" />
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="frmAmgCad">
+
+			<p:toolbar>
+				<f:facet name="left">
+					<h:outputText value="Cadastrar Amigo do Meu Amigo" />
+				</f:facet>
+			</p:toolbar>
+
+			<h:panelGrid id="pnlAmgCadDados">
+				<p:outputLabel value="Nome:" />
+				<p:inputText maxlength="50" size="30"
+					value="#{amigoBean.amigoCadastro.nome}"
+					readonly="#{amigoBean.acao == 'Excluir'}">
+					<f:validateBean />
+				</p:inputText>
+
+				<p:outputLabel value="E-mail:" />
+				<p:inputText maxlength="50" size="30"
+					value="#{amigoBean.amigoCadastro.email}"
+					readonly="#{amigoBean.acao == 'Excluir'}">
+					<f:validateBean />
+				</p:inputText>
+
+				<p:outputLabel value="Telefone:" />
+				<p:inputText maxlength="50" size="30"
+					value="#{amigoBean.amigoCadastro.telefone}"
+					readonly="#{amigoBean.acao == 'Excluir'}">
+					<f:validateBean />
+				</p:inputText>
+
+				<p:outputLabel value="Empresa:" />
+				<p:inputText maxlength="50" size="30"
+					value="#{amigoBean.amigoCadastro.empresa}"
+					readonly="#{amigoBean.acao == 'Excluir'}">
+					<f:validateBean />
+				</p:inputText>
+				
+			</h:panelGrid>
+
+
+			<h:panelGrid columns="4">
+				<p:commandButton value="Salvar"
+					actionListener="#{amigoBean.salvar}"
+					update=":msgGlobal :frmAmgCad:pnlAmgCadDados"
+					rendered="#{amigoBean.acao == 'Novo'}" />
+
+				<p:commandButton value="Excluir"
+					actionListener="#{amigoBean.excluir}" update=":msgGlobal"
+					rendered="#{amigoBean.acao == 'Excluir'}" />
+
+				<p:button value="Voltar" outcome="/pages/amigoPesquisa.xhtml" />
+			</h:panelGrid>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<!-- CARREGA TEMPLATES -->
+<ui:composition template="/templates/modeloGeral.xhtml">
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:event listener="#{pessoaBean.carregarPesquisa}"
+				type="preRenderView" />
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<f:event listener="#{pessoaBean.carregarPesquisa}"
+			type="preRenderView"></f:event>
+		<h:form>
+
+			<!-- TABELA PRINCIPAL DE APRESENTAÇÃO DOS DADOS CADASTRADOS -->
+			<p:dataTable emptyMessage="Nenhum Amigo Cadastrado"
+				value="#{pessoaBean.listarPessoas}"
+				filteredValue="#{pessoaBean.listarPessoasFiltradas}" var="pessoa"
+				rows="20" paginator="true">
+
+				<f:facet name="footer">
+					<p:button value="Novo Amigo" outcome="/pages/pessoaCadastro.xhtml">
+						<f:param name="pesAcao" value="Novo" />
+					</p:button>
+
+					<p:button value="Ver Amigos do Meus Amigos"
+						outcome="/pages/amigoPesquisa.xhtml">
+						<f:param name="pesAcao" value="verAmigos" />
+					</p:button>
+				</f:facet>
+
+				<p:column headerText="Nome" filterBy="#{pessoa.nome}"
+					sortBy="#{pessoa.nome}">
+					<h:outputText value="#{pessoa.nome}" />
+				</p:column>
+
+				<p:column headerText="E-mail" filterBy="#{pessoa.email}"
+					sortBy="#{pessoa.email}">
+					<h:outputText value="#{pessoa.email}" />
+				</p:column>
+
+				<p:column headerText="Telefone" filterBy="#{pessoa.telefone}"
+					sortBy="#{pessoa.telefone}">
+					<h:outputText value="#{pessoa.telefone}" />
+				</p:column>
+
+				<p:column headerText="Empresa" filterBy="#{pessoa.empresa}"
+					sortBy="#{pessoa.empresa}">
+					<h:outputText value="#{pessoa.empresa}" />
+				</p:column>
+
+				<p:column headerText="Opções">
+					<p:button value="Editar" outcome="/pages/pessoaCadastro.xhtml">
+						<f:param name="pesCod" value="#{pessoa.id}" />
+						<f:param name="pesAcao" value="Editar" />
+					</p:button>
+
+					<p:button value="Excluir" outcome="/pages/pessoaCadastro.xhtml">
+						<f:param name="pesCod" value="#{pessoa.id}" />
+						<f:param name="pesAcao" value="Excluir" />
+					</p:button>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
